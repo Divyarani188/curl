@@ -3359,7 +3359,8 @@ static CURLcode parse_connect_to_slist(struct Curl_easy *data,
   }
 
 #ifdef USE_ALTSVC
-  if(!host && (port == -1)) {
+  if(data->asi && !host && (port == -1) &&
+     (conn->handler->protocol == CURLPROTO_HTTPS)) {
     /* no connect_to match, try alt-svc! */
     const char *nhost;
     int nport;
